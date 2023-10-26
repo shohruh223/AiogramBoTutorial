@@ -1,4 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
 
 def menu() -> ReplyKeyboardMarkup:
@@ -6,7 +6,8 @@ def menu() -> ReplyKeyboardMarkup:
     button = KeyboardButton("/start")
     button2 = KeyboardButton("/help")
     button3 = KeyboardButton("next")
-    rkm.add(button, button2, button3)
+    button4 = KeyboardButton("next inline")
+    rkm.add(button, button2, button3, button4)
     return rkm
 
 
@@ -19,3 +20,4 @@ def next_menu() -> ReplyKeyboardMarkup:
     button5 = KeyboardButton("back")
     rkm.add(button, button2, button3, button4, button5)
     return rkm
+
