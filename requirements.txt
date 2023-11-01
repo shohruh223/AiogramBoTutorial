@@ -1,2 +1,5 @@
-aiogram~=2.14
-environs~=8.0.0
+aiogram==2.25.2
+environs==8.0.0
+Pillow==10.1.0
+requests==2.31.0
+
