@@ -6,3 +6,11 @@ class AddUserState(StatesGroup):
     age = State()
     phone_number = State()
     photo = State()
+
+
+class AllUserState(StatesGroup):
+    all = State()
+
+
+class GetUserState(StatesGroup):
+    get = State()

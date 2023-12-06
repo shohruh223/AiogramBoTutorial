@@ -3,12 +3,15 @@ from aiogram.dispatcher import FSMContext
 from loader import dp, bot
 from states.user import AddUserState
 import re
+from utils.db_api.user import Database
+
+db = Database()
 
 
 @dp.message_handler(state=AddUserState.fullname)
 async def add_fullname(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data["name"] = message.text
+        data["fullname"] = message.text
 
     await message.answer("Yoshingizni kiriting")
     await AddUserState.next()
@@ -45,10 +48,13 @@ async def add_photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["photo"] = file_id
         await state.finish()
-
         await bot.send_photo(chat_id=message.chat.id,
                              photo=data["photo"],
-                             caption=f"Ismingiz: <b>{data['name'].title()}</b>,\n"
+                             caption=f"Ismingiz: <b>{data['fullname'].title()}</b>,\n"
                              f"Yoshingiz: <b>{data['age']}</b>da,\n"
                              f"Telefon raqamingiz: <b>{data['phone_number']}</b>",
                              parse_mode="HTML")
+        db.add_user(fullname=data["fullname"],
+                    age=data["age"],
+                    phone_number=data["phone_number"],
+                    photo=data["photo"])
