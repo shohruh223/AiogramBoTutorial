@@ -1,8 +1,10 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from keyboards.inline.inline_user import edit_users, show_users
+
+from keyboards.default.user_keyboard import cancel_button
+from keyboards.inline.inline_user import show_users, edit_user_check, edit_users
 from loader import dp
-from states.user import GetUserState
+from states.user import GetUserState, EditUserState
 from utils.db_api.user import Database
 
 db = Database()
@@ -31,13 +33,14 @@ async def call(callback: types.CallbackQuery):
             await callback.message.answer_photo(photo=user[4],
                                                 caption=user[1],
                                                 reply_markup=edit_users())
+    if callback.data == f"edit user":
+        await callback.message.answer(text="Foydalanuvchini ID sini kiriting",
+                                      reply_markup=cancel_button())
+        await EditUserState.id.set()
     if callback.data == "back":
         await callback.message.answer(text="ortga",
-                                reply_markup=show_users())
+                                      reply_markup=show_users())
 
 
-# @dp.callback_query_handler()
-# async def call_back(callback: types.CallbackQuery):
-#     if callback.data == "back":
-#         await callback.message.answer(text="ortga",
-#                                 reply_markup=show_users())
+
+

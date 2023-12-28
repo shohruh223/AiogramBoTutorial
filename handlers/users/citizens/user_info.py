@@ -3,7 +3,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 from keyboards.default.user_keyboard import cancel_button, user_button, crud_button, is_and_cancel_button
 from loader import dp
-from states.user import AddUserState, AllUserState, GetUserState
+from states.user import AddUserState, AllUserState, GetUserState, EditUserState, DeleteUserState
 
 
 # @dp.message_handler(Text(equals="✅ Ro'yxatdan o'tish"))
@@ -23,7 +23,7 @@ async def register(message: types.Message):
 async def register_user(message: types.Message):
     await message.answer(text="Ro'yhatdan o'tish",
                          reply_markup=cancel_button())
-    await message.answer(text="Ismingizni kiriting",)
+    await message.answer(text="Ismingizni kiriting", )
     await AddUserState.fullname.set()
 
 
@@ -39,6 +39,20 @@ async def view_user(message: types.Message):
     await message.answer(text="Foydalanuvchini ID sini kiriting",
                          reply_markup=cancel_button())
     await GetUserState.get.set()
+
+
+@dp.message_handler(Text(equals="Edit user"))
+async def edit_user(message: types.Message):
+    await message.answer(text="Foydalanuvchini ID sini kiriting",
+                         reply_markup=cancel_button())
+    await EditUserState.id.set()
+
+
+@dp.message_handler(Text(equals="Delete user"))
+async def delete_user(message: types.Message):
+    await message.answer(text="Foydalanuvchini ID sini kiriting",
+                         reply_markup=cancel_button())
+    await DeleteUserState.id.set()
 
 
 @dp.message_handler(Text(equals="🔙 orqaga qaytish"), state="*")

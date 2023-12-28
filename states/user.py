@@ -14,3 +14,15 @@ class AllUserState(StatesGroup):
 
 class GetUserState(StatesGroup):
     get = State()
+
+
+class EditUserState(StatesGroup):
+    id = State()
+    fullname = State()
+    age = State()
+    phone_number = State()
+    photo = State()
+
+
+class DeleteUserState(StatesGroup):
+    id = State()

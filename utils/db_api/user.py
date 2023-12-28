@@ -30,12 +30,35 @@ class Database:
         self.cursor.execute("select * from users")
         return self.cursor.fetchall()
 
-    def edit_user(self, id, fullname, age, phone_number, photo):
-        self.cursor.execute("update users set fullname=?, age=?, phone_number=?, photo=? where id=?",
-                            (fullname, age, phone_number, photo, id))
-        self.connection.commit()
-
     def delete_user(self, id):
         self.cursor.execute("delete from users where id=?", (id,))
         self.connection.commit()
 
+    # def edit_user(self, id, fullname, age, phone_number, photo):
+    #     self.cursor.execute("update users set fullname=?, age=?, phone_number=?, photo=? where id=?",
+    #                         (fullname, age, phone_number, photo, id))
+    #     self.connection.commit()
+
+    def update_user_fullname(self, id, fullname):
+        self.cursor.execute("""
+            update users set fullname=? where id=?
+        """, (fullname, id))
+        self.connection.commit()
+
+    def update_user_age(self, id, age):
+        self.cursor.execute("""
+            update users set age=? where id=?
+        """, (age, id))
+        self.connection.commit()
+
+    def update_user_phone(self, id, phone_number):
+        self.cursor.execute("""
+            update users set phone_number=? where id=?
+        """, (phone_number, id))
+        self.connection.commit()
+
+    def update_user_photo(self, id, photo):
+        self.cursor.execute("""
+            update users set photo=? where id=?
+        """, (photo, id))
+        self.connection.commit()
